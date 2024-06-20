@@ -25,4 +25,13 @@ public interface BlogRepository {
     //n개의 복수의 Blog 엔터티를 받아와야 하므로 List로 감쌈
     List<Blog> findAll();
 
+    //단일 조회 기능 findById()
+    //호출시 blogId를 요구한다.
+    Blog findById(long blogId);
+
+    // 새 데이터 저장 기능 save()
+    // 저장시 writer, blog_title, blog_content 3개 파라미터를 요구함
+    // 근데 위 3개 파라미터는 Blog 엔터티의 멤버변수임
+    void save(Blog blog);
+
 }

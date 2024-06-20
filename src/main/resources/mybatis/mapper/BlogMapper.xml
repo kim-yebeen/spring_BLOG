@@ -43,6 +43,25 @@
         VALUES (#{writer}, #{blogTitle}, #{blogContent})
     </insert>
 
+    <!-- delete 태그를 이용해서 deleteById 메서드 구현 -->
+    <delete id="deleteById" parameterType="long">
+        DELETE FROM
+                   blog
+        WHERE
+            blog_id= #{blogId}
+    </delete>
+
+    <!-- 수정 로직 제목, 본문, 업데이트 시각 -->
+    <update id="update" parameterType="kim.y.blog.entity.Blog">
+        UPDATE
+            blog
+        SET
+            blog_title = #{blogTitle},
+            blog_content = #{blogContent},
+            updated_at=now()
+        WHERE
+            blog_id=#{blogId}
+    </update>
     <!-- 테스트를 위한 쿼리문들 -->
     <update id="createBlogTable">
         CREATE TABLE IF NOT EXISTS blog(

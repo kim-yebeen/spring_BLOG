@@ -8,6 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 @SpringBootTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)//DROP TABLE시 필요한 어노테이션
@@ -88,7 +89,21 @@ public class BlogRepositoryTest {
         assertEquals(2, blog.getBlogId());
     }
 
-    @AfterEach //단위테ㅡ트 끝난 후에 실행할 구문을 작성
+    @Test
+    @DisplayName("2번 글 삭제 후 전체 목록 가져왔을 때 남은 행 수 2개, 삭제한 번호 재조회시 null")
+    public void deleteByIdTest(){
+        //given : 삭제할 자료의 번호를 저장
+        long blogId=2;
+
+        //when:삭제로직 실행 후, findAll(), findById()로 전체 행, 개별 행 가져오기
+        blogRepository.deleteById(blogId);
+
+        //then : 단언문을 이용해 전체 행 2개, 개별 행은 null임을 확인
+        assertEquals(2, blogRepository.findAll().size());
+        assertNull(blogRepository.findById(blogId));
+    }
+
+    @AfterEach //단위테스트 끝난 후에 실행할 구문을 작성
     public void dropBlogTable(){
         blogRepository.dropBlogTable(); //blog 테이블 지우기
     }

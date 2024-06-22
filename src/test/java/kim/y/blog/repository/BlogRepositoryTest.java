@@ -109,19 +109,33 @@ public class BlogRepositoryTest {
         //given 2번글 원본 데이터를 얻어온 다음, blogTitle, blogContent 내용만 수정해서 다시 update()
         // blog객체를 생성해서 blogId와 blogTitle, blogContent 내용만 setter로 주입해서 다시 update()
 
-        //1번 given 실행
-        //픽스처 생성
+
         long blogId=2;
+
         String blogTitle = "수정한 제목";
         String blogContent = "수정한 본문";
-
+        //1번 given 실행
+        //픽스처 생성
+        /*
         Blog blog = blogRepository.findById(blogId);
         blog.setBlogTitle(blogTitle);
         blog.setBlogContent(blogContent);
+        */
 
-        //when
+        //2번 given 실행
+        Blog blog = Blog.builder() //빌더패턴 시작
+                .blogId(blogId)
+                .blogTitle(blogTitle)
+                .blogContent(blogContent)
+                .build();//빌더패턴 끝
 
-        //then
+        //when : 수정 내역을 DB에 반영해주기
+        blogRepository.update(blog);
+
+        //then : 바뀐 2번 글의 타이틀은 "수정한제목",본문은 "수정한 본문"으로 변환되었을 것이다.
+        assertEquals(blogTitle, blogRepository.findById(blogId).getBlogTitle());
+        assertEquals(blogContent, blogRepository.findById(blogId).getBlogContent());
+
     }
 
     @AfterEach //단위테스트 끝난 후에 실행할 구문을 작성

@@ -103,6 +103,27 @@ public class BlogRepositoryTest {
         assertNull(blogRepository.findById(blogId));
     }
 
+    @Test
+    @DisplayName("2번 글의 제목을 '수정한 제목'으로, 본문도 '수정한 본문'으로 수정 후 확인")
+    public void updateTest(){
+        //given 2번글 원본 데이터를 얻어온 다음, blogTitle, blogContent 내용만 수정해서 다시 update()
+        // blog객체를 생성해서 blogId와 blogTitle, blogContent 내용만 setter로 주입해서 다시 update()
+
+        //1번 given 실행
+        //픽스처 생성
+        long blogId=2;
+        String blogTitle = "수정한 제목";
+        String blogContent = "수정한 본문";
+
+        Blog blog = blogRepository.findById(blogId);
+        blog.setBlogTitle(blogTitle);
+        blog.setBlogContent(blogContent);
+
+        //when
+
+        //then
+    }
+
     @AfterEach //단위테스트 끝난 후에 실행할 구문을 작성
     public void dropBlogTable(){
         blogRepository.dropBlogTable(); //blog 테이블 지우기
